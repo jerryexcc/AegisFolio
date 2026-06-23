@@ -1,11 +1,48 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content'
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// 1. 在編譯階段撈取所有專案資料
+const allProjects = await getCollection('projects')
+const myStageName = "特務工程師小明"
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<html lang="zh-TW">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{myStageName} | AegisFolio</title>
+    <style>
+      /* 簡易防爆排版 CSS */
+      body { font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; background: #121214; color: #e1e1e6; }
+      .card { border: 1px solid #323238; background: #202024; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+      .tag { display: inline-block; background: #29292e; color: #00b37e; padding: 4px 8px; border-radius: 4px; font-size: 12px; margin-right: 5px; }
+      .badge-private { background: #f75a68; color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 12px; float: right; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>🕵️‍♂️ {myStageName} 的檔案庫</h1>
+      <p>歡迎來到我的個人網站。目前網站處於【公開模式】，敏感個資已被安全屏蔽。</p>
+      <hr style="border-color: #323238; margin: 30px 0;" />
+    </header>
+
+    <main>
+      <h2>💼 過往專案回顧</h2>
+      
+      {allProjects.map(project => (
+        <div class="card">
+          {project.data.isPrivate && <span class="badge-private">商業機密保護中</span>}
+          <h3>{project.data.title}</h3>
+          <p style="color: #8d8d99; font-size: 14px;">期間：{project.data.period}</p>
+          <p>{project.data.summary}</p>
+          
+          <div>
+            {project.data.tags.map(tag => (
+              <span class="tag">#{tag}</span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </main>
+  </body>
+</html>
