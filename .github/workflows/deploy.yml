@@ -1,5 +1,39 @@
-- name: Build Astro Website with Secrets Injection
-        # 🛠️ 這裡就是在雲端虛擬機進行「手動物理注入」
+name: Deploy AegisFolio to GitHub Pages
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Astro Website with Secrets Injection
         env:
           PUBLIC_AGE: $(( $(date +%Y) - ${{ secrets.PUBLIC_BIRTH_YEAR }} ))
           PUBLIC_REAL_NAME: ${{ secrets.PUBLIC_REAL_NAME }}
@@ -8,4 +42,14 @@
           PUBLIC_LINE_ID: ${{ secrets.PUBLIC_LINE_ID }}
           PUBLIC_GAS_WEBAPP_URL: ${{ secrets.PUBLIC_GAS_WEBAPP_URL }}
         run: |
+          echo "🛡️ AegisFolio 安全編譯啟動..."
           npm run build
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
