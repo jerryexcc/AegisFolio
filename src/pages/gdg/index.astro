@@ -1,0 +1,43 @@
+---
+const talkTitle = "深入淺出 Android 藍牙與邊緣運算整合實戰"
+const eventName = "GDG DevFest 2026"
+---
+<html lang="zh-TW">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{eventName} | {talkTitle}</title>
+    <style>
+      body { background: #121214; color: #e1e1e6; font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
+      .section { border-left: 4px solid #4285f4; padding-left: 20px; margin: 30px 0; }
+      .demo-box { background: #202024; padding: 20px; border-radius: 8px; border: 1px dashed #4285f4; text-align: center; }
+      .btn-glow { background: #4285f4; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; display: inline-block; font-weight: bold; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <p style="color: #4285f4; font-weight: bold;">⚡ {eventName} 演講專屬網頁</p>
+      <h1>{talkTitle}</h1>
+      <p>感謝你參與今天的分享！以下是本次演講的相關資產與 Live Demo。</p>
+    </header>
+
+    <main>
+      <div class="section">
+        <h3>📊 簡報與程式碼</h3>
+        <ul>
+          <li><a href="#" style="color: #4285f4;">Slide 簡報線上看 (Speaker Deck)</a></li>
+          <li><a href="#" style="color: #4285f4;">GitHub 範例專案原始碼 (Kotlin)</a></li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h3>📱 現場 Live Demo 演示</h3>
+        <p>演講中提到的「手機 IoT 連線相機藍牙狀態機」，我將其脫敏並移植到了網頁端，歡迎點擊下方按鈕觀看獨立演示：</p>
+        <div class="demo-box">
+          <p style="margin-bottom: 20px; color: #8d8d99;">模擬真實 Android 藍牙底層與相機通訊通訊協定</p>
+          <a href="/gdg/demo-iot" class="btn-glow">開啟獨立 IoT 模擬器面板 🚀</a>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

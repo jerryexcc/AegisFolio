@@ -1,0 +1,11 @@
+- name: Build Astro Website with Secrets Injection
+        # 🛠️ 這裡就是在雲端虛擬機進行「手動物理注入」
+        env:
+          PUBLIC_AGE: $(( $(date +%Y) - ${{ secrets.PUBLIC_BIRTH_YEAR }} ))
+          PUBLIC_REAL_NAME: ${{ secrets.PUBLIC_REAL_NAME }}
+          PUBLIC_PHONE_NUMBER: ${{ secrets.PUBLIC_PHONE_NUMBER }}
+          PUBLIC_EMAIL: ${{ secrets.PUBLIC_EMAIL }}
+          PUBLIC_LINE_ID: ${{ secrets.PUBLIC_LINE_ID }}
+          PUBLIC_GAS_WEBAPP_URL: ${{ secrets.PUBLIC_GAS_WEBAPP_URL }}
+        run: |
+          npm run build
