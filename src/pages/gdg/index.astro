@@ -1,43 +1,441 @@
 ---
-const talkTitle = "深入淺出 Android 藍牙與邊緣運算整合實戰"
-const eventName = "GDG DevFest 2026"
+// src/pages/gdg/index.astro
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const talkTitle = "深入淺出 Android 藍牙與邊緣運算整合實戰";
+const eventName = "GDG DevFest 2026";
+const pageTitle = `${eventName} | ${talkTitle}`;
+const pageDescription = `GDG DevFest 2026 演講專屬網頁：Android 藍牙與邊緣運算整合實戰，投影片與開源範例專案。`;
 ---
-<html lang="zh-TW">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{eventName} | {talkTitle}</title>
-    <style>
-      body { background: #121214; color: #e1e1e6; font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
-      .section { border-left: 4px solid #4285f4; padding-left: 20px; margin: 30px 0; }
-      .demo-box { background: #202024; padding: 20px; border-radius: 8px; border: 1px dashed #4285f4; text-align: center; }
-      .btn-glow { background: #4285f4; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; display: inline-block; font-weight: bold; }
-    </style>
-  </head>
-  <body>
-    <header>
-      <p style="color: #4285f4; font-weight: bold;">⚡ {eventName} 演講專屬網頁</p>
-      <h1>{talkTitle}</h1>
-      <p>感謝你參與今天的分享！以下是本次演講的相關資產與 Live Demo。</p>
-    </header>
 
-    <main>
-      <div class="section">
-        <h3>📊 簡報與程式碼</h3>
-        <ul>
-          <li><a href="#" style="color: #4285f4;">Slide 簡報線上看 (Speaker Deck)</a></li>
-          <li><a href="#" style="color: #4285f4;">GitHub 範例專案原始碼 (Kotlin)</a></li>
-        </ul>
-      </div>
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <div class="gdg-page-layout">
+    
+    <!-- Top Navigation -->
+    <header class="top-nav">
+      <div class="nav-container">
+        <a href="/" class="nav-back">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          <span>返回作品首頁</span>
+        </a>
 
-      <div class="section">
-        <h3>📱 現場 Live Demo 演示</h3>
-        <p>演講中提到的「手機 IoT 連線相機藍牙狀態機」，我將其脫敏並移植到了網頁端，歡迎點擊下方按鈕觀看獨立演示：</p>
-        <div class="demo-box">
-          <p style="margin-bottom: 20px; color: #8d8d99;">模擬真實 Android 藍牙底層與相機通訊通訊協定</p>
-          <a href="/gdg/demo-iot" class="btn-glow">開啟獨立 IoT 模擬器面板 🚀</a>
+        <div class="nav-actions">
+          <a href="/card" class="nav-card-link">
+            <span>🪪 數位名片</span>
+          </a>
         </div>
       </div>
+    </header>
+
+    <main class="gdg-main animate-fade-in">
+      
+      <!-- Hero -->
+      <section class="gdg-hero glass-panel">
+        <div class="gdg-badge">
+          <span class="event-icon">⚡</span>
+          <span>{eventName} 演講專屬網頁</span>
+        </div>
+        <h1 class="talk-title">{talkTitle}</h1>
+        <p class="talk-desc">
+          感謝各位開發者參與今天的技術分享！以下為本次演講的投影片、GitHub 範例程式碼與相關技術資源。
+        </p>
+      </section>
+
+      <!-- Slides & Code Resources -->
+      <section class="resource-section glass-panel">
+        <h2 class="section-title">
+          <span class="sec-icon">📊</span>
+          <span>簡報與開源程式碼</span>
+        </h2>
+        <div class="resource-grid">
+          <a href="https://speakerdeck.com" target="_blank" rel="noopener noreferrer" class="resource-card card">
+            <div class="res-icon-wrap">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
+            </div>
+            <div class="res-info">
+              <h3>Slide 簡報線上看</h3>
+              <p>Speaker Deck 完整投影片與架構圖解</p>
+            </div>
+            <span class="res-arrow">→</span>
+          </a>
+
+          <a href="https://github.com/jerryexcc" target="_blank" rel="noopener noreferrer" class="resource-card card">
+            <div class="res-icon-wrap">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+              </svg>
+            </div>
+            <div class="res-info">
+              <h3>GitHub 範例專案原始碼</h3>
+              <p>Android Kotlin 協程與 BLE 狀態機實作碼</p>
+            </div>
+            <span class="res-arrow">→</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- Live Demo Teaser Section -->
+      <section class="demo-section glass-panel">
+        <div class="demo-badge">📱 現場 Live Demo</div>
+        <h2>手機 IoT 連線相機藍牙狀態機</h2>
+        <p class="demo-intro">
+          演講中展示的真實 Android 藍牙底層與相機通訊協定，已進行脫敏並規劃移植為網頁端互動狀態機。
+        </p>
+        
+        <div class="demo-status-box">
+          <div class="demo-status-text">
+            <span class="status-dot"></span>
+            <span>Web 模擬器面板規劃中（即將推出）</span>
+          </div>
+          <p class="demo-note">使用 Vue 3 與 Nanostores 打造的純前端連線握手視覺化面板</p>
+        </div>
+      </section>
+
+      <!-- Talk Summary Points -->
+      <section class="points-section glass-panel">
+        <h2 class="section-title">
+          <span class="sec-icon">💡</span>
+          <span>演講三大核心主題</span>
+        </h2>
+        <div class="points-list">
+          <div class="point-item">
+            <div class="point-number">01</div>
+            <div class="point-text">
+              <h4>BLE 握手與 MTU 動態協商</h4>
+              <p>跨多晶片廠商的 Android BluetoothGatt 防禦性程式設計與自動重連最佳實踐。</p>
+            </div>
+          </div>
+
+          <div class="point-item">
+            <div class="point-number">02</div>
+            <div class="point-text">
+              <h4>Wi-Fi Direct P2P 高頻寬傳輸</h4>
+              <p>利用 BLE 低功耗待機動態喚醒高頻寬 Wi-Fi Direct 通道，平衡耗電與連拍傳輸速度。</p>
+            </div>
+          </div>
+
+          <div class="point-item">
+            <div class="point-number">03</div>
+            <div class="point-text">
+              <h4>狀態機架構與資料脫敏思維</h4>
+              <p>如何透過 Finite State Machine (FSM) 消除並發競態，並在不違反 NDA 前提下安全展示技術架構。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Back / Contact CTA -->
+      <footer class="gdg-footer">
+        <div class="cta-wrap glass-panel">
+          <h3>想深入探討 Android 或 IoT 相關議題？</h3>
+          <p>歡迎查看特務數位名片，與我進行技術交流！</p>
+          <div class="cta-buttons">
+            <a href="/card" class="btn-aegis btn-primary">🪪 查看數位名片</a>
+            <a href="/projects/iot-camera" class="btn-aegis">檢視 IoT 專案架構詳情</a>
+          </div>
+        </div>
+      </footer>
+
     </main>
-  </body>
-</html>
+  </div>
+</BaseLayout>
+
+<style>
+  .gdg-page-layout {
+    min-height: 100vh;
+    padding-bottom: 60px;
+  }
+
+  .top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(9, 9, 11, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .nav-container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+
+  .nav-back:hover {
+    color: var(--accent-primary);
+    transform: translateX(-3px);
+  }
+
+  .nav-card-link {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-card);
+    transition: all 0.2s ease;
+  }
+
+  .nav-card-link:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+  }
+
+  .gdg-main {
+    max-width: 860px;
+    margin: 30px auto 0;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .gdg-hero {
+    padding: 36px;
+    border-left: 4px solid var(--accent-blue);
+  }
+
+  .gdg-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    color: var(--accent-blue);
+    background: rgba(66, 133, 244, 0.1);
+    border: 1px solid rgba(66, 133, 244, 0.3);
+    padding: 4px 12px;
+    border-radius: 9999px;
+    margin-bottom: 16px;
+  }
+
+  .talk-title {
+    font-size: 28px;
+    margin: 0 0 14px 0;
+    line-height: 1.3;
+  }
+
+  .talk-desc {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .resource-section {
+    padding: 28px;
+  }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 20px;
+    margin: 0 0 20px 0;
+  }
+
+  .resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 16px;
+  }
+
+  .resource-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+  }
+
+  .res-icon-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(66, 133, 244, 0.15);
+    color: var(--accent-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .res-info {
+    flex: 1;
+  }
+
+  .res-info h3 {
+    font-size: 16px;
+    margin: 0 0 4px 0;
+    color: var(--text-primary);
+  }
+
+  .res-info p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .res-arrow {
+    color: var(--text-muted);
+    font-size: 18px;
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+
+  .resource-card:hover .res-arrow {
+    color: var(--accent-blue);
+    transform: translateX(4px);
+  }
+
+  .demo-section {
+    padding: 32px;
+    text-align: center;
+    border: 1px dashed rgba(66, 133, 244, 0.4);
+  }
+
+  .demo-badge {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent-blue);
+    margin-bottom: 8px;
+  }
+
+  .demo-section h2 {
+    font-size: 22px;
+    margin: 0 0 10px 0;
+  }
+
+  .demo-intro {
+    font-size: 15px;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto 24px;
+    line-height: 1.6;
+  }
+
+  .demo-status-box {
+    background: rgba(24, 24, 27, 0.8);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 20px;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .demo-status-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #00d696;
+    margin-bottom: 6px;
+  }
+
+  .demo-note {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .points-section {
+    padding: 32px;
+  }
+
+  .points-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .point-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .point-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .point-number {
+    font-size: 22px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--accent-blue);
+    opacity: 0.8;
+  }
+
+  .point-text h4 {
+    font-size: 16px;
+    margin: 0 0 6px 0;
+  }
+
+  .point-text p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .cta-wrap {
+    text-align: center;
+    padding: 36px 20px;
+  }
+
+  .cta-wrap h3 {
+    font-size: 20px;
+    margin: 0 0 8px 0;
+  }
+
+  .cta-wrap p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin: 0 0 20px 0;
+  }
+
+  .cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 640px) {
+    .gdg-hero, .resource-section, .demo-section, .points-section {
+      padding: 20px;
+    }
+    .talk-title {
+      font-size: 22px;
+    }
+    .resource-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

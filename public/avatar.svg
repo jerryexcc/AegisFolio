@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <radialGradient id="bg-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00b37e" stop-opacity="0.25" />
+      <stop offset="60%" stop-color="#18181b" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#09090b" stop-opacity="1" />
+    </radialGradient>
+    <linearGradient id="shield-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00b37e" />
+      <stop offset="50%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#047857" />
+    </linearGradient>
+    <linearGradient id="cyber-accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00b37e" stop-opacity="0" />
+      <stop offset="50%" stop-color="#00b37e" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#00b37e" stop-opacity="0" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background Circle -->
+  <circle cx="100" cy="100" r="96" fill="url(#bg-glow)" stroke="#27272a" stroke-width="2" />
+  
+  <!-- Cybernetic Orbit Ring -->
+  <circle cx="100" cy="100" r="88" fill="none" stroke="#00b37e" stroke-width="1.5" stroke-dasharray="8 6 24 6" opacity="0.45" />
+  <circle cx="100" cy="100" r="80" fill="none" stroke="#3f3f46" stroke-width="1" stroke-dasharray="4 8" opacity="0.6" />
+
+  <!-- Aegis Outer Crest Shield -->
+  <path d="M100 35 L145 52 C145 92 125 125 100 142 C75 125 55 92 55 52 Z" 
+        fill="#18181b" 
+        stroke="url(#shield-grad)" 
+        stroke-width="2.5" 
+        filter="url(#glow)" />
+
+  <!-- Shield Core Details -->
+  <path d="M100 48 L133 60 C133 88 118 112 100 126 C82 112 67 88 67 60 Z" 
+        fill="#202024" 
+        stroke="#27272a" 
+        stroke-width="1.5" />
+
+  <!-- Stylized Hooded Agent Silhouette / Mask -->
+  <path d="M100 58 C90 58 82 66 80 77 C78 86 82 95 90 99 L90 106 L100 112 L110 106 L110 99 C118 95 122 86 120 77 C118 66 110 58 100 58 Z" 
+        fill="#09090b" 
+        stroke="#00b37e" 
+        stroke-width="1.2" />
+
+  <!-- Glowing Visor / HUD Line -->
+  <path d="M88 78 Q100 82 112 78" stroke="#00b37e" stroke-width="3" stroke-linecap="round" filter="url(#glow)" />
+  <circle cx="100" cy="80" r="1.5" fill="#e1e1e6" />
+
+  <!-- Circuit traces -->
+  <path d="M60 145 L75 160 L100 160 L125 160 L140 145" fill="none" stroke="#00b37e" stroke-width="1.5" opacity="0.5" />
+  <circle cx="60" cy="145" r="2" fill="#00b37e" />
+  <circle cx="140" cy="145" r="2" fill="#00b37e" />
+
+  <!-- Code brackets indicator -->
+  <text x="50" y="105" fill="#00b37e" font-family="monospace" font-size="14" opacity="0.6" font-weight="bold">&lt;</text>
+  <text x="142" y="105" fill="#00b37e" font-family="monospace" font-size="14" opacity="0.6" font-weight="bold">&gt;</text>
+</svg>
