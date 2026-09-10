@@ -4,46 +4,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 const realName = import.meta.env.PUBLIC_REAL_NAME || "特務小明";
 const lineId = import.meta.env.PUBLIC_LINE_ID || "@aegis_jerry";
+const email = import.meta.env.PUBLIC_EMAIL || "";
+const phone = import.meta.env.PUBLIC_PHONE_NUMBER || "";
 const jobTitle = "資深 Android 開發工程師 & 系統分析師 (SA) | AI 應用整合專家";
 const title = `${realName} | 數位名片`;
 const description = `${realName} - ${jobTitle} | AegisFolio 數位名片`;
 
-const links = [
-  {
-    title: "技術作品與火力展示",
-    subtitle: "查看完整專案庫、架構解密與脫敏成果",
-    url: "/",
-    icon: "portfolio",
-    badge: "Main",
-    highlight: true,
-  },
-  {
-    title: "GDG 演講與簡報專區",
-    subtitle: "深入淺出 Android 藍牙與邊緣運算整合實戰",
-    url: "/gdg",
-    icon: "presentation",
-    badge: "2026 DevFest",
-    highlight: false,
-  },
-  {
-    title: "GitHub 原始碼庫",
-    subtitle: "@jerryexcc 開源專案與個人實驗室",
-    url: "https://github.com/jerryexcc",
-    icon: "github",
-    badge: "Open Source",
-    isExternal: true,
-    highlight: false,
-  },
-  {
-    title: "LINE Bot 隱私驗證解鎖",
-    subtitle: "透過特務機器人獲取完整經歷與商業專案通行證",
-    url: "https://line.me",
-    icon: "lock",
-    badge: "2FA",
-    isExternal: true,
-    highlight: false,
-  }
-];
 ---
 
 <BaseLayout title={title} description={description} image="/avatar.svg">
@@ -61,7 +27,7 @@ const links = [
       <!-- Avatar Profile Header -->
       <header class="profile-header">
         <div class="avatar-wrapper">
-          <img src="/avatar.svg" alt={realName} class="avatar-img" width="104" height="104" />
+          <img src="/avatar_main.png" alt={realName} class="avatar-img" width="104" height="104" />
           <div class="avatar-badge" title="Aegis 驗證開發者">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"></polyline>
@@ -79,60 +45,28 @@ const links = [
           <span class="line-id-label">LINE</span>
           <span class="line-id-value">{lineId}</span>
         </div>
-      </header>
 
-      <!-- Links Navigation -->
-      <nav class="links-stack">
-        {links.map((link) => (
-          <a
-            href={link.url}
-            class={`link-item ${link.highlight ? 'link-highlight' : ''}`}
-            target={link.isExternal ? "_blank" : undefined}
-            rel={link.isExternal ? "noopener noreferrer" : undefined}
-          >
-            <div class="link-icon">
-              {link.icon === 'portfolio' && (
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-                </svg>
-              )}
-              {link.icon === 'presentation' && (
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M2 3h20"></path>
-                  <path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3"></path>
-                  <path d="m7 21 5-5 5 5"></path>
-                </svg>
-              )}
-              {link.icon === 'github' && (
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
-                </svg>
-              )}
-              {link.icon === 'lock' && (
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                </svg>
-              )}
-            </div>
-
-            <div class="link-content">
-              <div class="link-title-row">
-                <span class="link-title">{link.title}</span>
-                {link.badge && <span class="link-badge">{link.badge}</span>}
-              </div>
-              <p class="link-subtitle">{link.subtitle}</p>
-            </div>
-
-            <div class="link-arrow">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="9 18 15 12 9 6"></polyline>
-              </svg>
-            </div>
+        {phone && (
+          <a href={`tel:${phone.replace(/-/g, '')}`} class="profile-phone" aria-label={`撥打電話至 ${phone}`}>
+            <svg class="phone-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/>
+            </svg>
+            <span class="phone-label">PHONE</span>
+            <span class="phone-value">{phone}</span>
           </a>
-        ))}
-      </nav>
+        )}
+
+        {email && (
+          <a href={`mailto:${email}`} class="profile-email" aria-label={`傳送 Email 至 ${email}`}>
+            <svg class="email-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="4" width="20" height="16" rx="2"/>
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+            </svg>
+            <span class="email-label">EMAIL</span>
+            <span class="email-value">{email}</span>
+          </a>
+        )}
+      </header>
 
       <!-- Quick Actions / Social Footer -->
       <footer class="card-footer">
@@ -273,7 +207,7 @@ const links = [
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    margin-bottom: 28px;
+    margin-bottom: 12px;
     background: rgba(0, 195, 91, 0.08);
     border: 1px solid rgba(0, 195, 91, 0.25);
     border-radius: 9999px;
@@ -284,6 +218,84 @@ const links = [
   .profile-line-id:hover {
     background: rgba(0, 195, 91, 0.15);
     border-color: rgba(0, 195, 91, 0.5);
+  }
+
+  .profile-phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    background: rgba(245, 158, 11, 0.08);
+    border: 1px solid rgba(245, 158, 11, 0.25);
+    border-radius: 9999px;
+    padding: 6px 16px 6px 10px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .profile-phone:hover {
+    background: rgba(245, 158, 11, 0.15);
+    border-color: rgba(245, 158, 11, 0.5);
+  }
+
+  .phone-icon {
+    color: #f59e0b;
+    flex-shrink: 0;
+  }
+
+  .phone-label {
+    font-size: 11px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: #f59e0b;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .phone-value {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+  }
+
+  .profile-email {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 28px;
+    background: rgba(99, 102, 241, 0.08);
+    border: 1px solid rgba(99, 102, 241, 0.25);
+    border-radius: 9999px;
+    padding: 6px 16px 6px 10px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .profile-email:hover {
+    background: rgba(99, 102, 241, 0.15);
+    border-color: rgba(99, 102, 241, 0.5);
+  }
+
+  .email-icon {
+    color: #818cf8;
+    flex-shrink: 0;
+  }
+
+  .email-label {
+    font-size: 11px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: #818cf8;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .email-value {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-family: var(--font-mono);
   }
 
   .line-icon {
