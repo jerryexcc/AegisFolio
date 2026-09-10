@@ -1,0 +1,471 @@
+---
+// src/pages/projects/[slug].astro
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+
+const pageTitle = `${project.data.title} | AegisFolio`;
+const pageDescription = project.data.description || project.data.summary;
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <div class="project-page-layout">
+    
+    <!-- Top Navigation Header -->
+    <header class="top-nav">
+      <div class="nav-container">
+        <a href="/" class="nav-back">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          <span>返回作品總覽</span>
+        </a>
+
+        <div class="nav-actions">
+          <a href="/card" class="nav-card-link">
+            <span>🪪 數位名片</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="project-main animate-fade-in">
+      
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb" aria-label="麵包屑導覽">
+        <a href="/">檔案庫首頁</a>
+        <span class="separator">/</span>
+        <span class="current">{project.data.title}</span>
+      </nav>
+
+      <!-- Project Hero Card -->
+      <section class="hero-card glass-panel">
+        <div class="hero-meta-row">
+          <div class="status-wrap">
+            {project.data.isPrivate ? (
+              <span class="badge-private">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                商業機密保護中 (已脫敏)
+              </span>
+            ) : (
+              <span class="badge-public">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                公開專案 (Open Source)
+              </span>
+            )}
+            <span class="period-text">📅 {project.data.period}</span>
+          </div>
+
+          {project.data.role && (
+            <span class="role-pill">
+              🎯 角色：{project.data.role}
+            </span>
+          )}
+        </div>
+
+        <h1 class="project-title">{project.data.title}</h1>
+        <p class="project-summary">{project.data.summary}</p>
+
+        <!-- Tags -->
+        <div class="tags-row">
+          {project.data.tags.map((tag: string) => (
+            <span class="tag">#{tag}</span>
+          ))}
+        </div>
+
+        <!-- Links Buttons -->
+        {(project.data.demoUrl || project.data.githubUrl) && (
+          <div class="action-buttons-row">
+            {project.data.demoUrl && (
+              <a href={project.data.demoUrl} class="btn-aegis btn-primary">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                <span>前往 Live Demo / 演講頁</span>
+              </a>
+            )}
+            {project.data.githubUrl && (
+              <a href={project.data.githubUrl} class="btn-aegis" target="_blank" rel="noopener noreferrer">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+                <span>檢視 GitHub 原始碼</span>
+              </a>
+            )}
+          </div>
+        )}
+      </section>
+
+      <!-- Architecture Highlights Box (if available) -->
+      {project.data.architecture && project.data.architecture.length > 0 && (
+        <section class="architecture-card glass-panel">
+          <h2 class="arch-title">
+            <span class="arch-icon">⚡</span>
+            <span>核心架構亮點</span>
+          </h2>
+          <ul class="arch-list">
+            {project.data.architecture.map((item: string) => (
+              <li class="arch-item">
+                <span class="arch-bullet"></span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <!-- Markdown Article Content -->
+      <article class="prose-content glass-panel">
+        <Content />
+      </article>
+
+      <!-- Footer CTA -->
+      <footer class="detail-footer">
+        <div class="cta-box glass-panel">
+          <h3>💬 對這個專案的架構或實現細節有興趣？</h3>
+          <p>歡迎交換名片或透過 LINE 申請進一步深度技術交流與 2FA 解鎖。</p>
+          <div class="cta-actions">
+            <a href="/card" class="btn-aegis btn-primary">聯絡特務 / 取得名片</a>
+            <a href="/" class="btn-aegis">查看更多作品</a>
+          </div>
+        </div>
+      </footer>
+
+    </main>
+  </div>
+</BaseLayout>
+
+<style>
+  .project-page-layout {
+    min-height: 100vh;
+    padding-bottom: 60px;
+  }
+
+  .top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(9, 9, 11, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .nav-container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+
+  .nav-back:hover {
+    color: var(--accent-primary);
+    transform: translateX(-3px);
+  }
+
+  .nav-card-link {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-card);
+    transition: all 0.2s ease;
+  }
+
+  .nav-card-link:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+  }
+
+  .project-main {
+    max-width: 860px;
+    margin: 30px auto 0;
+    padding: 0 20px;
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .breadcrumb a {
+    color: var(--text-secondary);
+    transition: color 0.2s;
+  }
+
+  .breadcrumb a:hover {
+    color: var(--accent-primary);
+  }
+
+  .breadcrumb .separator {
+    color: var(--border-hover);
+  }
+
+  .breadcrumb .current {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  .hero-card {
+    padding: 32px;
+    margin-bottom: 24px;
+  }
+
+  .hero-meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .status-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .period-text {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+  }
+
+  .role-pill {
+    font-size: 12px;
+    font-family: var(--font-mono);
+    color: #60a5fa;
+    background: rgba(96, 165, 250, 0.1);
+    border: 1px solid rgba(96, 165, 250, 0.3);
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+
+  .project-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 12px 0;
+    line-height: 1.3;
+  }
+
+  .project-summary {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0 0 20px 0;
+  }
+
+  .tags-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .action-buttons-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .architecture-card {
+    padding: 24px 28px;
+    margin-bottom: 24px;
+    border-left: 4px solid var(--accent-primary);
+  }
+
+  .arch-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+  }
+
+  .arch-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .arch-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .arch-bullet {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-primary);
+    margin-top: 8px;
+    flex-shrink: 0;
+  }
+
+  .prose-content {
+    padding: 36px;
+    margin-bottom: 36px;
+  }
+
+  /* Deep Prose Styling */
+  .prose-content :global(h2) {
+    font-size: 22px;
+    border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: 10px;
+    margin-top: 32px;
+    margin-bottom: 16px;
+  }
+
+  .prose-content :global(h3) {
+    font-size: 18px;
+    color: #e4e4e7;
+    margin-top: 24px;
+    margin-bottom: 12px;
+  }
+
+  .prose-content :global(h4) {
+    font-size: 16px;
+    color: var(--accent-primary);
+    margin-top: 18px;
+    margin-bottom: 8px;
+  }
+
+  .prose-content :global(p) {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+
+  .prose-content :global(ul), .prose-content :global(ol) {
+    padding-left: 24px;
+    color: var(--text-secondary);
+    margin-bottom: 18px;
+  }
+
+  .prose-content :global(li) {
+    margin-bottom: 8px;
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  .prose-content :global(strong) {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .prose-content :global(code) {
+    font-family: var(--font-mono);
+    background: rgba(39, 39, 42, 0.8);
+    color: #38bdf8;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+    border: 1px solid rgba(63, 63, 70, 0.4);
+  }
+
+  .prose-content :global(hr) {
+    border: none;
+    border-top: 1px solid var(--border-subtle);
+    margin: 32px 0;
+  }
+
+  .prose-content :global(blockquote) {
+    border-left: 4px solid var(--accent-amber);
+    background: rgba(245, 158, 11, 0.08);
+    padding: 12px 18px;
+    margin: 20px 0;
+    border-radius: 0 8px 8px 0;
+    color: #fde68a;
+  }
+
+  .detail-footer {
+    margin-top: 40px;
+  }
+
+  .cta-box {
+    text-align: center;
+    padding: 36px 24px;
+  }
+
+  .cta-box h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+
+  .cta-box p {
+    color: var(--text-secondary);
+    font-size: 14px;
+    max-width: 540px;
+    margin: 0 auto 24px;
+  }
+
+  .cta-actions {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 640px) {
+    .hero-card, .prose-content {
+      padding: 20px;
+    }
+    .project-title {
+      font-size: 22px;
+    }
+    .action-buttons-row {
+      flex-direction: column;
+    }
+    .action-buttons-row .btn-aegis {
+      width: 100%;
+    }
+  }
+</style>
