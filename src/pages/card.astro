@@ -71,13 +71,24 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
       <!-- Quick Actions / Social Footer -->
       <footer class="card-footer">
-        <button id="copy-btn" class="action-pill" aria-label="複製名片連結">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-          </svg>
-          <span id="copy-text">分享 / 複製連結</span>
-        </button>
+        <div class="footer-actions">
+          <button id="download-btn" class="action-pill action-pill-primary" aria-label="下載名片為 PNG 圖片">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            <span id="download-text">下載名片 PNG</span>
+          </button>
+
+          <button id="copy-btn" class="action-pill" aria-label="複製名片連結">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            <span id="copy-text">分享 / 複製連結</span>
+          </button>
+        </div>
 
         <p class="footer-note">
           🛡️ Aegis Security Protocol • Built with Astro
@@ -89,6 +100,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 </BaseLayout>
 
 <script>
+  import { toPng } from 'html-to-image';
+
+  // 複製連結
   const copyBtn = document.getElementById('copy-btn');
   const copyText = document.getElementById('copy-text');
 
@@ -109,6 +123,53 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         }
       } catch (err) {
         // user canceled share
+      }
+    });
+  }
+
+  // 下載名片圖片 (排除下載按鈕)
+  const downloadBtn = document.getElementById('download-btn');
+  const downloadText = document.getElementById('download-text');
+  const cardContainer = document.querySelector('.card-container') as HTMLElement | null;
+
+  if (downloadBtn && downloadText && cardContainer) {
+    downloadBtn.addEventListener('click', async () => {
+      try {
+        downloadBtn.setAttribute('disabled', 'true');
+        downloadText.textContent = '產生圖片中...';
+
+        const dataUrl = await toPng(cardContainer, {
+          quality: 1,
+          pixelRatio: 2, // 2x 高解析度
+          backgroundColor: '#09090b',
+          filter: (node) => {
+            // 排除下載按鈕本身
+            if (node instanceof HTMLElement) {
+              if (node.id === 'download-btn' || node.classList.contains('download-exclude')) {
+                return false;
+              }
+            }
+            return true;
+          },
+        });
+
+        const link = document.createElement('a');
+        link.download = `AegisFolio_Card_${new Date().toISOString().slice(0, 10)}.png`;
+        link.href = dataUrl;
+        link.click();
+
+        downloadText.textContent = '下載成功！✓';
+        setTimeout(() => {
+          downloadText.textContent = '下載名片 PNG';
+          downloadBtn.removeAttribute('disabled');
+        }, 2000);
+      } catch (error) {
+        console.error('下載名片失敗:', error);
+        downloadText.textContent = '下載失敗，請重試';
+        setTimeout(() => {
+          downloadText.textContent = '下載名片 PNG';
+          downloadBtn.removeAttribute('disabled');
+        }, 2500);
       }
     });
   }
@@ -429,6 +490,14 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     gap: 16px;
   }
 
+  .footer-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+
   .action-pill {
     display: inline-flex;
     align-items: center;
@@ -448,6 +517,26 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     border-color: var(--accent-primary);
     color: var(--accent-primary);
     background: rgba(0, 179, 126, 0.05);
+  }
+
+  .action-pill-primary {
+    background: rgba(0, 179, 126, 0.12);
+    border-color: rgba(0, 179, 126, 0.4);
+    color: var(--accent-primary);
+    font-weight: 500;
+  }
+
+  .action-pill-primary:hover {
+    background: var(--accent-primary);
+    color: #000;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 16px var(--accent-glow);
+  }
+
+  .action-pill[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
   }
 
   .footer-note {
