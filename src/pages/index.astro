@@ -8,6 +8,7 @@ const allProjects = await getCollection('projects');
 const realName = import.meta.env.PUBLIC_REAL_NAME || "特務小明";
 const pageTitle = `${realName} | AegisFolio 特務級作品庫`;
 const pageDescription = `${realName} 的個人作品集檔案庫。收錄 Android 底層架構、BLE IoT 系統與現代 Web 解決方案。`;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription}>
@@ -16,17 +17,17 @@ const pageDescription = `${realName} 的個人作品集檔案庫。收錄 Androi
     <!-- Top Navigation Bar -->
     <header class="top-nav">
       <div class="nav-inner">
-        <a href="/" class="brand-logo">
-          <img src="/avatar.svg" alt="Aegis" width="32" height="32" class="brand-icon" />
+        <a href={`${base}/`} class="brand-logo">
+          <img src={`${base}/avatar.svg`} alt="Aegis" width="32" height="32" class="brand-icon" />
           <span class="brand-text">Aegis<span class="brand-highlight">Folio</span></span>
         </a>
 
         <nav class="nav-links">
-          <a href="/card" class="nav-pill nav-pill-highlight">
+          <a href={`${base}/card`} class="nav-pill nav-pill-highlight">
             <span class="pill-icon">🪪</span>
             <span>數位名片</span>
           </a>
-          <a href="/gdg" class="nav-pill">
+          <a href={`${base}/gdg`} class="nav-pill">
             <span class="pill-icon">🎤</span>
             <span>GDG 演講</span>
           </a>
@@ -81,7 +82,7 @@ const pageDescription = `${realName} 的個人作品集檔案庫。收錄 Androi
               <polyline points="19 12 12 19 5 12"></polyline>
             </svg>
           </a>
-          <a href="/card" class="btn-aegis">
+          <a href={`${base}/card`} class="btn-aegis">
             <span>🪪 查看數位名片</span>
           </a>
         </div>
@@ -99,7 +100,7 @@ const pageDescription = `${realName} 的個人作品集檔案庫。收錄 Androi
 
         <div class="projects-grid">
           {allProjects.map((project) => (
-            <a href={`/projects/${project.id}`} class="project-card card">
+            <a href={`${base}/projects/${project.id}`} class="project-card card">
               <div class="card-top-meta">
                 {project.data.isPrivate ? (
                   <span class="badge-private">
@@ -150,7 +151,7 @@ const pageDescription = `${realName} 的個人作品集檔案庫。收錄 Androi
           <h3>「深入淺出 Android 藍牙與邊緣運算整合實戰」</h3>
           <p>演講投影片、開源範例專案與現場脫敏 Live Demo 模擬器專區。</p>
         </div>
-        <a href="/gdg" class="btn-aegis gdg-btn">
+        <a href={`${base}/gdg`} class="btn-aegis gdg-btn">
           <span>開啟演講專頁</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="9 18 15 12 9 6"></polyline>

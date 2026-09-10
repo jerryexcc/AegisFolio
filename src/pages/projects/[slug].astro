@@ -16,6 +16,7 @@ const { Content } = await render(project);
 
 const pageTitle = `${project.data.title} | AegisFolio`;
 const pageDescription = project.data.description || project.data.summary;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription}>
@@ -24,7 +25,7 @@ const pageDescription = project.data.description || project.data.summary;
     <!-- Top Navigation Header -->
     <header class="top-nav">
       <div class="nav-container">
-        <a href="/" class="nav-back">
+        <a href={`${base}/`} class="nav-back">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="19" y1="12" x2="5" y2="12"></line>
             <polyline points="12 19 5 12 12 5"></polyline>
@@ -33,7 +34,7 @@ const pageDescription = project.data.description || project.data.summary;
         </a>
 
         <div class="nav-actions">
-          <a href="/card" class="nav-card-link">
+          <a href={`${base}/card`} class="nav-card-link">
             <span>🪪 數位名片</span>
           </a>
         </div>
@@ -44,7 +45,7 @@ const pageDescription = project.data.description || project.data.summary;
       
       <!-- Breadcrumb -->
       <nav class="breadcrumb" aria-label="麵包屑導覽">
-        <a href="/">檔案庫首頁</a>
+        <a href={`${base}/`}>檔案庫首頁</a>
         <span class="separator">/</span>
         <span class="current">{project.data.title}</span>
       </nav>
@@ -141,8 +142,8 @@ const pageDescription = project.data.description || project.data.summary;
           <h3>💬 對這個專案的架構或實現細節有興趣？</h3>
           <p>歡迎交換名片或透過 LINE 申請進一步深度技術交流與 2FA 解鎖。</p>
           <div class="cta-actions">
-            <a href="/card" class="btn-aegis btn-primary">聯絡特務 / 取得名片</a>
-            <a href="/" class="btn-aegis">查看更多作品</a>
+            <a href={`${base}/card`} class="btn-aegis btn-primary">聯絡特務 / 取得名片</a>
+            <a href={`${base}/`} class="btn-aegis">查看更多作品</a>
           </div>
         </div>
       </footer>

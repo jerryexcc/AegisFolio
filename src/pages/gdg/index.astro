@@ -6,6 +6,7 @@ const talkTitle = "深入淺出 Android 藍牙與邊緣運算整合實戰";
 const eventName = "GDG DevFest 2026";
 const pageTitle = `${eventName} | ${talkTitle}`;
 const pageDescription = `GDG DevFest 2026 演講專屬網頁：Android 藍牙與邊緣運算整合實戰，投影片與開源範例專案。`;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription}>
@@ -14,7 +15,7 @@ const pageDescription = `GDG DevFest 2026 演講專屬網頁：Android 藍牙與
     <!-- Top Navigation -->
     <header class="top-nav">
       <div class="nav-container">
-        <a href="/" class="nav-back">
+        <a href={`${base}/`} class="nav-back">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="19" y1="12" x2="5" y2="12"></line>
             <polyline points="12 19 5 12 12 5"></polyline>
@@ -23,7 +24,7 @@ const pageDescription = `GDG DevFest 2026 演講專屬網頁：Android 藍牙與
         </a>
 
         <div class="nav-actions">
-          <a href="/card" class="nav-card-link">
+          <a href={`${base}/card`} class="nav-card-link">
             <span>🪪 數位名片</span>
           </a>
         </div>
@@ -137,8 +138,8 @@ const pageDescription = `GDG DevFest 2026 演講專屬網頁：Android 藍牙與
           <h3>想深入探討 Android 或 IoT 相關議題？</h3>
           <p>歡迎查看特務數位名片，與我進行技術交流！</p>
           <div class="cta-buttons">
-            <a href="/card" class="btn-aegis btn-primary">🪪 查看數位名片</a>
-            <a href="/projects/iot-camera" class="btn-aegis">檢視 IoT 專案架構詳情</a>
+            <a href={`${base}/card`} class="btn-aegis btn-primary">🪪 查看數位名片</a>
+            <a href={`${base}/projects/iot-camera`} class="btn-aegis">檢視 IoT 專案架構詳情</a>
           </div>
         </div>
       </footer>
